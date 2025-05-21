@@ -4,6 +4,8 @@ install_hooks:
 	-pre-commit install
 
 install_jupyter:
+	-uv add jupyter
+	-uv add notebook
 	-uv add ipython
 	-uv add ipykernel
 	-uv add ipywidgets
