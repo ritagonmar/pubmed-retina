@@ -4,7 +4,8 @@ import numpy as np
 def find_mask_words(abstracts, word, verbose=True):
     """Creates a mask for abstracts containing a certain word.
     Creates several masks of the size of `abstracts` for instances containing the words in `words`. Also it prints how many instances contain each word, in its capitalized, uncapitalized versions, and total.
-
+    If I query the word "retina" it will also give back words like "retinal" because it has to match the beginning of the word but it can still be a substring of another full word.
+    
     Parameters
     ----------
     abstracts : pandas dataframe of str
