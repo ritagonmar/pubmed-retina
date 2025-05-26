@@ -220,12 +220,21 @@ def plot_label_tags(
     assert x_lim[0] < x_lim[1], "xlim values are in the wrong order"
     assert y_lim[0] < y_lim[1], "ylim values are in the wrong order"
 
-    if "unlabeled" in legend.keys():
-        legend.pop("unlabeled")
+    legend_copy = legend.copy()
+    legend_keys = legend.keys()
+
+    # if "unlabeled" in legend_keys:
+    #     legend_copy.pop("unlabeled")
+
+    for key in legend_keys:
+        if (np.sum(colors == legend_copy[key]) == 0) | (key == "unlabeled"):
+            legend_copy.pop(key)
+            if key != "unlabeled":
+                print(f"No {str(key)} samples")
 
     # calculate cluster centers
     center_cluster_coordinates = find_cluster_center(
-        tsne, colors, legend, subset, subset_size, rs
+        tsne, colors, legend_copy, subset, subset_size, rs
     )
 
     # sort by x
@@ -243,8 +252,8 @@ def plot_label_tags(
     sorted_labels_left = center_cluster_coordinates_left.index.tolist()
     sorted_labels_right = center_cluster_coordinates_right.index.tolist()
 
-    sorted_colors_left = np.vectorize(legend.get)(sorted_labels_left)
-    sorted_colors_right = np.vectorize(legend.get)(sorted_labels_right)
+    sorted_colors_left = np.vectorize(legend_copy.get)(sorted_labels_left)
+    sorted_colors_right = np.vectorize(legend_copy.get)(sorted_labels_right)
 
     if capitalize == True:
         sorted_labels_left = [elem.capitalize() for elem in sorted_labels_left]
