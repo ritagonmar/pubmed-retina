@@ -48,8 +48,8 @@ def plot_tsne_colors(
     if ax is None:
         fig, ax = plt.subplots()
 
-    s_grey = 0.5
-    s_color = 0.5
+    s_grey = 0.8
+    s_color = 0.8
     alpha_grey = 0.6
     alpha_color = 0.7
 
@@ -168,6 +168,7 @@ def plot_label_tags(
     rs=42,
     fontsize=7,
     capitalize=True,
+    alpha_boxes=0.8,
 ):
     """Plots label tags and a line pointing to the embedding.
     The line from a label tag points to the location with higher points density of that specific label.
@@ -283,7 +284,7 @@ def plot_label_tags(
                 bbox=dict(
                     facecolor=colr,
                     edgecolor="None",
-                    alpha=0.8,
+                    alpha=alpha_boxes,
                     boxstyle="square",
                     pad=0.05,
                 ),
@@ -294,6 +295,7 @@ def plot_label_tags(
                 c=colr,
                 linewidth=0.4,
                 clip_on=False,
+                alpha=alpha_boxes,
             )
         else:
             # black colored letters
@@ -307,7 +309,7 @@ def plot_label_tags(
                 bbox=dict(
                     facecolor=colr,
                     edgecolor="None",
-                    alpha=0.8,
+                    alpha=alpha_boxes,
                     boxstyle="square",
                     pad=0.05,
                 ),
@@ -318,6 +320,7 @@ def plot_label_tags(
                 c=colr,
                 linewidth=0.4,
                 clip_on=False,
+                alpha=alpha_boxes,
             )
 
     # right
@@ -353,7 +356,7 @@ def plot_label_tags(
                 bbox=dict(
                     facecolor=colr,
                     edgecolor="None",
-                    alpha=0.8,
+                    alpha=alpha_boxes,
                     boxstyle="square",
                     pad=0.05,
                 ),
@@ -364,6 +367,7 @@ def plot_label_tags(
                 c=colr,
                 linewidth=0.4,
                 clip_on=False,
+                alpha=alpha_boxes,
             )
         else:
             ax.text(
@@ -376,7 +380,7 @@ def plot_label_tags(
                 bbox=dict(
                     facecolor=colr,
                     edgecolor="None",
-                    alpha=0.8,
+                    alpha=alpha_boxes,
                     boxstyle="square",
                     pad=0.05,
                 ),
@@ -387,6 +391,7 @@ def plot_label_tags(
                 c=colr,
                 linewidth=0.4,
                 clip_on=False,
+                alpha=alpha_boxes,
             )
 
 
@@ -689,7 +694,7 @@ def plot_tsne_word(
     exploration.find_mask_words
 
     """
-    assert  (save_fig == True) & (saving_path is not None), "Saving path is missing"
+    assert (save_fig == True) & (saving_path is not None), "Saving path is missing"
 
     if type(word) is str:
         if ax is None:
