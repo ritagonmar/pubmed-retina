@@ -19,11 +19,13 @@ mask_retina_patient = np.load(variables_path / "mask_retina_patient.npy")
 mask_non_human = (~mask_retina_subject) & (~mask_retina_patient)
 
 animal_labels = np.load(variables_path / "retina_animal_labels.npy", allow_pickle=True)
-anmls = animal_labels[mask_non_human]
-print(embeddings[mask_retina][mask_non_human][anmls != "mouse"].shape)
+mask_non_mouse = (animal_labels[mask_non_human] != "mouse") & (
+    animal_labels[mask_non_human] != "rat"
+)
+print(embeddings[mask_retina][mask_non_human][mask_non_mouse].shape)
 
 run_tsne(
-    embeddings[mask_retina][mask_non_human][anmls != "mouse"],
+    embeddings[mask_retina][mask_non_human][mask_non_mouse],
     "_retina_non_human_non_mouse",
     saving_path=variables_path,
 )

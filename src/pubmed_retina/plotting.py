@@ -43,7 +43,8 @@ def plot_tsne_colors(
         None,
         "subplot_2",
         "subplot_3",
-    ], "Not valid `plot_type` value. Choose from [None, 'subplot_2', 'subplot_3']."
+        "few_points",
+    ], "Not valid `plot_type` value. Choose from [None, 'subplot_2', 'subplot_3', 'few_points']."
 
     if ax is None:
         fig, ax = plt.subplots()
@@ -60,6 +61,10 @@ def plot_tsne_colors(
     if plot_type == "subplot_3":
         s_grey = 0.1
         s_color = 0.1
+
+    if plot_type == "few_points":
+        s_color = 2
+        # alpha_color = 0.5
 
     ax.scatter(
         tsne[:, 0][colors == "lightgrey"],
@@ -142,9 +147,13 @@ def find_cluster_center(tsne, colors, legend, subset=True, subset_size=500000, r
     for i in range(len(words)):
         cluster = tsne_subset[colors_subset == unique_colors[i]]
         assert cluster.shape[0] > 0
-        # center with kernel density
-        kde = gaussian_kde(cluster.T)
-        center_cluster_coordinates.append(cluster[kde(cluster.T).argmax()])
+        if cluster.shape[0] == 1:  # HOTFIX
+            print(cluster)
+            center_cluster_coordinates.append(cluster)
+        else:
+            # center with kernel density
+            kde = gaussian_kde(cluster.T)
+            center_cluster_coordinates.append(cluster[kde(cluster.T).argmax()])
 
     center_cluster_coordinates = np.vstack(center_cluster_coordinates)
 
@@ -404,6 +413,113 @@ def plot_label_tags(
             )
 
 
+def plot_ordered_tags(
+    tsne,
+    colors,
+    legend,
+    sorted_labels_left=None,
+    sorted_labels_right=None,
+    ax=None,
+    x_lim=None,
+    y_lim=None,
+    middle_value=0,
+    subset=True,
+    subset_size=500000,
+    rs=42,
+    fontsize=7,
+    capitalize=True,
+    alpha_boxes=0.8,
+):
+
+    if ax is None:
+        fig, ax = plt.subplots()
+
+    if x_lim is None:
+        xmin, xmax, ymin, ymax = ax.axis()
+        x_lim = (xmin, xmax)
+    if y_lim is None:
+        xmin, xmax, ymin, ymax = ax.axis()
+        y_lim = (ymin, ymax)
+
+    assert x_lim[0] < x_lim[1], "xlim values are in the wrong order"
+    assert y_lim[0] < y_lim[1], "ylim values are in the wrong order"
+
+    legend_copy = legend.copy()
+    legend_keys = legend.keys()
+
+    for key in legend_keys:
+        if (np.sum(colors == legend_copy[key]) == 0) | (key == "unlabeled"):
+            legend_copy.pop(key)
+            if key != "unlabeled":
+                print(f"No {str(key)} samples")
+
+    # calculate cluster centers
+    center_cluster_coordinates = find_cluster_center(
+        tsne, colors, legend_copy, subset, subset_size, rs
+    )
+
+    # PLOT
+    if sorted_labels_left:
+        # left
+        n = len(sorted_labels_left)
+        x = x_lim[0] * np.ones(n)
+        y = np.linspace(y_lim[1], y_lim[0], n)
+        for i, key in enumerate(sorted_labels_left):
+            ax.text(
+                x[i],
+                y[i],
+                key.capitalize(),
+                c="k",
+                fontsize=fontsize,
+                ha="right",
+                bbox=dict(
+                    facecolor=legend[key],
+                    edgecolor="None",
+                    alpha=alpha_boxes,
+                    boxstyle="square",
+                    pad=0.05,
+                ),
+            )
+            ax.plot(
+                [x[i], center_cluster_coordinates.x.loc[key]],
+                [y[i], center_cluster_coordinates.y.loc[key]],
+                c=legend[key],
+                linewidth=0.4,
+                clip_on=False,
+                alpha=alpha_boxes,
+            )
+
+    if sorted_labels_right:
+        # right
+        n = len(sorted_labels_right)
+        x = x_lim[1] * np.ones(n)
+        y = np.linspace(y_lim[1], y_lim[0], n)
+        for i, key in enumerate(sorted_labels_right):
+            ax.text(
+                x[0],
+                y[0],
+                key.capitalize(),
+                c="k",
+                fontsize=fontsize,
+                ha="right",
+                bbox=dict(
+                    facecolor=legend[key],
+                    edgecolor="None",
+                    alpha=alpha_boxes,
+                    boxstyle="square",
+                    pad=0.05,
+                ),
+            )
+            ax.plot(
+                [x[i], center_cluster_coordinates.x.loc[key]],
+                [y[i], center_cluster_coordinates.y.loc[key]],
+                c=legend[key],
+                linewidth=0.4,
+                clip_on=False,
+                alpha=alpha_boxes,
+            )
+
+
 def plot_tsne_years(
     tsne,
     colors,
@@ -571,9 +687,10 @@ def plot_tsne_mask(mask, tsne, x_lim, y_lim, ax=None, plot_type=None, axis_on=Fa
     exploration.find_mask_words
 
     """
-
-    assert x_lim[0] < x_lim[1], "xlim values are in the wrong order"
-    assert y_lim[0] < y_lim[1], "ylim values are in the wrong order"
+    if x_lim is not None:
+        assert x_lim[0] < x_lim[1], "xlim values are in the wrong order"
+    if y_lim is not None:
+        assert y_lim[0] < y_lim[1], "ylim values are in the wrong order"
 
     assert plot_type in [
         None,
@@ -647,8 +764,10 @@ def plot_tsne_mask(mask, tsne, x_lim, y_lim, ax=None, plot_type=None, axis_on=Fa
     )  # linewidths=0)
 
     ax.axis("equal")
-    ax.set_xlim(x_lim[0], x_lim[1])
-    ax.set_ylim(y_lim[0], y_lim[1])
+    if x_lim is not None:
+        ax.set_xlim(x_lim[0], x_lim[1])
+    if y_lim is not None:
+        ax.set_ylim(y_lim[0], y_lim[1])
 
     if axis_on == False:
         ax.axis("off")

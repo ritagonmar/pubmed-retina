@@ -1,0 +1,230 @@
+taxon_species_forms = {
+    # Jawless fish
+    "lamprey": [
+        "lamprey",
+        "Petromyzon marinus",
+        "Lampetra fluviatilis",
+    ],
+    "hagfish": [
+        "hagfish",
+        "Eptatretus stoutii",
+        "Myxine glutinosa",
+    ],
+    "sea lamprey": [
+        "sea lamprey",
+        "Petromyzon marinus",
+    ],  
+    "brook lamprey": ["brook lamprey", "Lampetra planeri"],
+    "river lamprey": [
+        "river lamprey",
+        "Lampetra fluviatilis",
+    ],
+    # Cartilaginous fish
+    "shark": [
+        "shark",
+        "Selachimorpha",
+        "elasmobranch",
+    ],
+    "ray": ["ray", "Batoidea", "elasmobranch"],
+    "skate": ["skate", "Rajidae"],
+    "catshark": [
+        "catshark",
+        # "Scyliorhinidae", # THESE ARE NOT USED (COMMENTED OUT)
+        # "Scyliorhinus canicula",
+    ],
+    "dogfish": ["dogfish", "Squalus acanthias", "spiny dogfish"],
+    "stingray": ["stingray", "Dasyatidae"],
+    "electric ray": [
+        "electric ray",
+        "Torpedinidae",
+        "torpedo ray",
+    ],
+    # Bony fish
+    "zebrafish": ["zebrafish", "Danio rerio", "zebra fish"],
+    "goldfish": ["goldfish", "Carassius auratus"],
+    "trout": [
+        "trout",
+        "Oncorhynchus mykiss",
+        "Salmo trutta",
+    ],
+    "salmon": ["salmon", "Salmo salar", "Atlantic salmon"],
+    "cod": ["cod", "Gadus morhua", "Atlantic cod"],
+    "tuna": ["tuna", "Thunnus", "bluefin tuna"],
+    "bass": [
+        "bass",
+        "Micropterus",
+        "sea bass",
+        "Dicentrarchus labrax",
+    ],
+    "danionella": [  
+        "danionella",
+    ],
+    "seahorse": ["seahorse", "Hippocampus", "Syngnathidae"],  
+    # Amphibians
+    "frog": ["frog", "Anura", "anuran", "anurans"],
+    "toad": ["toad", "Bufo", "Rhinella marina"],
+    "salamander": [
+        "salamander",
+        "Caudata",
+        "Ambystoma tigrinum",
+    ],
+    "newt": ["newt", "Triturus", "Notophthalmus viridescens"],
+    "xenopus": [
+        "xenopus",
+        "clawed frog",
+    ],
+    "axolotl": ["axolotl", "Ambystoma mexicanum"],
+    "caecilian": ["caecilian", "Gymnophiona"],
+    # Reptiles
+    "turtle": [
+        "turtle",
+        "Testudines",
+        "Chelonia",
+        "tortoise",
+    ],
+    "snake": ["snake", "Serpentes", "ophidian"],
+    "lizard": ["lizard", "Lacertilia", "Squamata"],
+    "gecko": ["gecko", "Gekkonidae", "Hemidactylus", "Tarentola"],
+    "iguana": ["iguana", "Iguanidae", "Iguana iguana"],
+    "crocodile": [
+        "crocodile",
+        "Crocodylus",
+        "crocodilian",
+    ],
+    "alligator": [
+        "alligator",
+        "Alligator mississippiensis",
+    ],
+    # Birds
+    "chicken": [
+        "chicken" "Gallus gallus",
+        "domestic fowl",
+        "poultry",
+        "chick",
+        "avian", 
+    ],
+    "pigeon": [
+        "pigeon",
+        "Columba livia",
+        "dove",
+    ],
+    "finch": [
+        "finch",
+        "Fringillidae",
+        "songbird",
+        "passerine",
+    ],
+    "sparrow": [
+        "sparrow",
+        "Passer domesticus",
+    ],
+    "owl": [
+        "owl",
+        "Strigiformes",
+        "Tyto alba",
+    ],
+    "eagle": [
+        "eagle",
+        "Accipitridae",
+        "raptor",
+        "bird of prey",
+    ],
+    "duck": ["duck", "Anatidae", "waterfowl"],
+    "zebra finch": [  
+        "zebra finch",
+        "Taeniopygia guttata",
+        "estrildid finch",
+    ],
+    "quail": [  
+        "quail",
+        "Coturnix coturnix",
+        "Coturnix japonica",
+    ],
+    # Mammals
+    "rabbit": [
+        "rabbit",
+        "Oryctolagus cuniculus",
+        "lagomorph",
+        "mammal",  # include general keywords in one of the species
+    ],
+    "cat": [
+        "cat",
+        "Felis catus",
+        "feline",
+    ],
+    "dog": [
+        "dog",
+        "Canis lupus familiaris",
+        "canine",
+    ],
+    "monkey": [
+        "monkey",
+        "primate",
+        "macaque",
+        "Macaca mulatta",
+    ],
+    "pig": [
+        "pig",
+        "Sus scrofa domesticus",
+        "swine",
+        "hog",
+    ],
+    "guinea pig": [
+        "guinea pig",
+        "Cavia porcellus",
+        "cavy",
+        "cavies",
+    ],
+    "sheep": [
+        "sheep",
+        "Ovis aries",
+        "ewe",
+    ],
+}
+
+
+# Dictionary mapping specific species to their alternative forms
+specific_species_forms = {
+    "chicken": [
+        "chicken",
+        "Gallus gallus",
+        "domestic fowl",
+        "poultry",
+        "chick",
+    ],
+    "zebra finch": [  
+        "zebra finch",
+        "Taeniopygia guttata",
+        "estrildid finch",
+    ],
+    "quail": [  
+        "quail",
+        "Coturnix coturnix",
+        "Coturnix japonica",
+    ],
+    "zebrafish": ["zebrafish", "Danio rerio", "zebra fish"],
+    "danionella": [  
+        "danionella",
+    ],
+    "seahorse": ["seahorse", "Hippocampus", "Syngnathidae"],  
+    "xenopus": [
+        "xenopus",
+        "clawed frog",
+    ],
+    "axolotl": [
+        "axolotl",
+        "Ambystoma mexicanum",
+        "Mexican salamander",
+    ],
+    "catshark": [
+        "catshark",
+        # "Scyliorhinidae",   # THESE ARE NOT USED (COMMENTED OUT)
+        # "Scyliorhinus canicula",
+    ],
+    "gecko": [
+        "gecko",
+        "Gekkonidae",
+        "Hemidactylus",
+        "Tarentola",
+    ],
+}
