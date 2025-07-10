@@ -6,6 +6,61 @@ from typing import List, Dict, Union
 import seaborn as sns
 
 
+def improved_coloring(journals, dict_words_colors):
+    """Creates coloring based on words appearing in a list of documents.
+    It creates an array with colors, assigning a color to each paper depending on whether it contains a word in its journal title from the keys in ` dict_words_colors`.
+
+    IMPORTANT REMARK: if the journal name contains two words belonging to the word list, the color of the word
+    located the latest in the list will be assigned to it (first, the first word's color is assigned and then
+    the second overwrites the first).
+
+    Parameters
+    ----------
+    journals : dataframe of str
+        Dataframe with the journal names of the papers, or any other corpus where to look for the words.
+    dict_words_colors : dict
+        Dictionary matching words to colors (legend). The keys are the words and the values are the colors.
+
+
+    Returns
+    -------
+    labels_with_unlabeled : list of str fo len (n_journals)
+        List or labels (words) for all instances including label 'unlabeled'.
+    colors : array
+        Colors for each paper.
+
+    See Also
+    --------
+    automatic_coloring
+
+    """
+
+    words = dict_words_colors.keys()
+    labels = np.empty(len(journals))
+
+    for i, wrd in enumerate(words):
+
+        word_may = wrd.capitalize()
+        word_min = " " + wrd
+
+        indexes1 = journals.str.find(word_may)
+        indexes2 = journals.str.find(word_min)
+
+        labels = np.where((indexes1 != -1) | (indexes2 != -1), wrd, labels)
+
+    # create colors
+    colors = np.vectorize(dict_words_colors.get)(labels)
+
+    # add grey to the rest of papers
+    colors = np.where(colors == None, "lightgrey", colors)
+    colors = np.where(colors == "None", "lightgrey", colors)
+
+    # change 0 for 'unlabeled'
+    labels_with_unlabeled = np.where(colors == "lightgrey", "unlabeled", labels)
+
+    return labels_with_unlabeled, colors
+
+
 # More efficient version for very large datasets using vectorized operations
 def label_texts_with_animals_vectorized(
     texts: pd.Series,
